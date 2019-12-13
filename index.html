@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="library">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body ng-controller="AppController as model" mouse-capture>
+
+    <div class="list-group">
+        <a ng-click="" class="list-group-item list-group-item-action" context-menu="context1">Test #1</a>
+        <a ng-click="" class="list-group-item list-group-item-action" context-menu="context2">Test #2</a>
+    </div>
+
+    <div id="context1" class="dropdown-menu">
+        <a href="#" class="dropdown-item">Upload</a>
+        <a href="#" class="dropdown-item">Zone</a>
+        <a href="#" class="dropdown-item">
+            More...
+            <div class="dropdown-menu">
+                <a href="#" class="dropdown-item">Zone</a>
+            </div>
+        </a>
+    </div>
+
+    <div id="context2" class="dropdown-menu">
+        <a href="#" class="dropdown-item">Group</a>
+    </div>
+
+    <script src="https://use.fontawesome.com/9f487f981c.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="./app.js"></script>
+    <script src="./mouse.js"></script>
+    <script src="./contextmenu.js"></script>
+</body>
