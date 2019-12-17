@@ -1,45 +1,70 @@
 (function (app) {
 
-    app.directive('contextMenu', function (mouseEvent) {
-        return {
-            restrict: 'A',
-            link: function ($scope, $element, $attrs) {
+    app
+        .factory('contextMenuElement',
+            function () {
+                var _element = '';
+                var _previousElement = '';
 
-                var menu = angular.element(document.getElementById($attrs.contextMenu));
-                var show = false;
+                var api = {
+                    set: function (element) {
+                        if (_element) _previousElement = _element;
+                        _element = element;
+                    },
+                    get: function () { return _element; },
+                    getPrevious: function () { return _previousElement; }
+                };
 
-                function toggle(show) {
-                    if (show) menu.addClass('show')
-                    else menu.removeClass('show');
-                }
+                return (api);
+            });
 
-                function setPosition(x, y) {
-                    menu.css({
-                        position: "fixed",
-                        left: event.pageX + 'px',
-                        top: event.pageY + 'px'
+    app
+        .directive('customContextmenu', function ($document, contextMenuElement) {
+            return {
+                restrict: 'A',
+                link: function ($scope, $element, $attrs) {
+
+                    function toggle(menu, state) {
+                        if (state) menu.addClass('show');
+                        else menu.removeClass('show');
+                    }
+
+                    function setPosition(menu, x, y) {
+                        menu.css({
+                            position: "fixed",
+                            left: x + 'px',
+                            top: y + 'px'
+                        });
+                    }
+
+                    function handle(event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+
+                        var prevCtxMenu = angular.element(document.getElementById(contextMenuElement.getPrevious()));
+                        var ctxMenu = angular.element(document.getElementById(contextMenuElement.get()));
+
+                        toggle(prevCtxMenu, false);
+                        toggle(ctxMenu, true);
+                        setPosition(ctxMenu, event.pageX, event.pageY);
+
+                    }
+
+                    function cancel(event) {
+                        var ctxMenu = angular.element(document.getElementById(contextMenuElement.get()));
+                        toggle(ctxMenu, false);
+                    }
+
+                    var aElement = angular.element($element);
+                    aElement.on('contextmenu', handle);
+                    $document.on('click', cancel);
+
+                    $scope.$on('$destroy', function (event) {
+                        aElement.off('contextmenu', handle);
+                        $document.off('click', cancel);
                     });
                 }
-
-                $scope.$watch(function () {
-                    return mouseEvent.get();
-                }, function (newVal, oldVal) {
-                    if (newVal) {
-                        var event = newVal;
-                        var type = mouseEvent.getType();
-                        var target = mouseEvent.getTarget();
-
-                        if (type === 'contextmenu' && angular.equals(angular.element(target), $element)) {
-                            toggle(true);
-                            setPosition(event.pageX, event.pageY);
-                        } else {
-                            toggle(false);
-                        }
-                    }
-                });
-
-            }
-        };
-    });
+            };
+        });
 
 })(angular.module('library'));

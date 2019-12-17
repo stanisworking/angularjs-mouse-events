@@ -6,12 +6,16 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body ng-controller="AppController as model" mouse-capture>
+<body ng-controller="AppController as model">
 
-    <div class="list-group">
+    <!-- <div class="list-group">
         <a ng-click="" class="list-group-item list-group-item-action" context-menu="context1">Test #1</a>
         <a ng-click="" class="list-group-item list-group-item-action" context-menu="context2">Test #2</a>
-    </div>
+    </div> -->
+
+    <list items="model.itemsForList" on-clicked="model.onClicked(event)" on-item-clicked="model.onItemClicked(event)"
+        custom-contextmenu>
+    </list>
 
     <div id="context1" class="dropdown-menu">
         <a href="#" class="dropdown-item">Upload</a>
@@ -43,4 +47,5 @@
     <script src="./app.js"></script>
     <script src="./mouse.js"></script>
     <script src="./contextmenu.js"></script>
+    <script src="./list.js"></script>
 </body>
